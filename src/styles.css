@@ -132,6 +132,10 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -140,5 +144,10 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  html[dir="rtl"] body {
+    font-family: "Cairo", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   }
 }
