@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { FileText, Globe, RotateCcw, Sparkles } from "lucide-react";
+import { FileText, RotateCcw, Sparkles } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -115,15 +115,27 @@ function App() {
               </div>
               <span className="text-xs font-semibold text-muted-foreground">{pct}%</span>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-1.5"
-              onClick={() => setLang(lang === "en" ? "ar" : "en")}
-            >
-              <Globe className="h-4 w-4" />
-              {lang === "en" ? "العربية" : "English"}
-            </Button>
+            <div className="inline-flex rounded-xl border border-border/70 bg-card/70 p-0.5">
+              {([
+                { id: "en", label: "EN" },
+                { id: "fr", label: "FR" },
+                { id: "ar", label: "AR" },
+              ] as const).map((l) => (
+                <button
+                  key={l.id}
+                  type="button"
+                  onClick={() => setLang(l.id)}
+                  className={cn(
+                    "rounded-lg px-2.5 py-1.5 text-xs font-bold transition",
+                    lang === l.id
+                      ? "bg-primary text-primary-foreground shadow"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {l.label}
+                </button>
+              ))}
+            </div>
             <Button
               variant="ghost"
               size="sm"
