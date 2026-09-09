@@ -157,7 +157,7 @@ function CertList({ cv, color = "#334155" }: { cv: CVData; color?: string }) {
 function Modern({ cv, d, lang }: TProps) {
   const p = cv.personal;
   return (
-    <div style={{ display: "flex", minHeight: A4_H, background: "#FFFFFF", color: INK }}>
+    <div style={{ display: "flex", background: "#FFFFFF", color: INK }}>
       <aside
         style={{
           width: 268,
@@ -269,7 +269,7 @@ function Modern({ cv, d, lang }: TProps) {
 function Executive({ cv, d, lang }: TProps) {
   const p = cv.personal;
   return (
-    <div style={{ background: "#FFFFFF", color: INK, padding: pad("42", "48"), minHeight: A4_H }}>
+    <div style={{ background: "#FFFFFF", color: INK, padding: pad("42", "48") }}>
       <header
         style={{
           display: "flex",
@@ -385,7 +385,7 @@ function Tech({ cv, d, lang }: TProps) {
       style={{
         background: "#0F172A",
         color: "#E2E8F0",
-        minHeight: A4_H,
+        
         padding: pad("42", "46"),
         fontFamily: "'JetBrains Mono', ui-monospace, monospace",
       }}
@@ -499,7 +499,7 @@ function Tech({ cv, d, lang }: TProps) {
 function Elegant({ cv, d, lang }: TProps) {
   const p = cv.personal;
   return (
-    <div style={{ background: "#FFFFFF", minHeight: A4_H, color: INK }}>
+    <div style={{ background: "#FFFFFF", color: INK }}>
       <div
         style={{
           background: "#F8FAFC",
@@ -616,7 +616,7 @@ function Elegant({ cv, d, lang }: TProps) {
 function Minimal({ cv, d, lang }: TProps) {
   const p = cv.personal;
   return (
-    <div style={{ background: "#FFFFFF", color: INK, minHeight: A4_H, padding: pad("54", "58") }}>
+    <div style={{ background: "#FFFFFF", color: INK, padding: pad("54", "58") }}>
       <div style={{ fontSize: 34, fontWeight: 300, letterSpacing: "-0.5px", lineHeight: lh(1.1) }}>
         {p.fullName || "—"}
       </div>
@@ -691,7 +691,7 @@ function Minimal({ cv, d, lang }: TProps) {
 function Creative({ cv, d, lang }: TProps) {
   const p = cv.personal;
   return (
-    <div style={{ background: "#FFFFFF", color: INK, minHeight: A4_H }}>
+    <div style={{ background: "#FFFFFF", color: INK }}>
       <div
         style={{
           background: "linear-gradient(120deg,#4F46E5 0%,#7C3AED 45%,#10B981 100%)",
@@ -832,7 +832,7 @@ function Creative({ cv, d, lang }: TProps) {
 function Corporate({ cv, d, lang }: TProps) {
   const p = cv.personal;
   return (
-    <div style={{ background: "#FFFFFF", color: INK, minHeight: A4_H }}>
+    <div style={{ background: "#FFFFFF", color: INK }}>
       <div style={{ height: 10, background: `linear-gradient(90deg,${INDIGO},${EMERALD})` }} />
       <div style={{ padding: pad("34", "48") }}>
         <header style={{ display: "flex", alignItems: "flex-start", gap: 18 }}>
@@ -983,7 +983,7 @@ function Compact({ cv, d, lang }: TProps) {
     </div>
   );
   return (
-    <div style={{ background: "#FFFFFF", color: INK, minHeight: A4_H, padding: pad("34", "40") }}>
+    <div style={{ background: "#FFFFFF", color: INK, padding: pad("34", "40") }}>
       <header style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: sp(14) }}>
         <Avatar src={p.avatar} size={62} radius={999} />
         <div style={{ flex: 1 }}>
@@ -1218,7 +1218,7 @@ export function CVDocument({ cv, d, lang }: TProps) {
         style={{
           ...vars,
           width: A4_W,
-          minHeight: A4_H,
+          
           transform: scale === 1 ? undefined : `scale(${scale})`,
           transformOrigin: lang === "ar" ? "top right" : "top left",
         }}
