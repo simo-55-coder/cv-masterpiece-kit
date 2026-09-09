@@ -1,4 +1,4 @@
-export type Lang = "en" | "ar";
+export type Lang = "en" | "ar" | "fr";
 
 export const dict = {
   en: {

@@ -60,9 +60,17 @@ export interface CVData {
   template: TemplateId;
 }
 
-export type TemplateId = "aurora" | "classic" | "mono" | "prestige";
+export type TemplateId =
+  | "aurora"
+  | "classic"
+  | "minimal"
+  | "compact"
+  | "mono"
+  | "prestige"
+  | "creative"
+  | "corporate";
 
-export const PREMIUM_TEMPLATES: TemplateId[] = ["mono", "prestige"];
+export const PREMIUM_TEMPLATES: TemplateId[] = ["mono", "prestige", "creative", "corporate"];
 
 export const uid = () => Math.random().toString(36).slice(2, 10);
 
