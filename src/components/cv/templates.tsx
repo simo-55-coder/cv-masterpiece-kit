@@ -1192,6 +1192,21 @@ function useAutoFill(signature: string) {
   return { ref, fill, scale };
 }
 
+/** Full-page background so a short CV still paints the whole sheet. */
+function backdrop(id: TemplateId, rtl: boolean): string {
+  const side = rtl ? "right" : "left";
+  switch (id) {
+    case "aurora":
+      return `linear-gradient(180deg,#4F46E5 0%,#3730A3 100%) ${side} top/268px 100% no-repeat, #FFFFFF`;
+    case "mono":
+      return "#0F172A";
+    case "corporate":
+      return `linear-gradient(90deg,#4F46E5,#10B981) left top/100% 10px no-repeat, #FFFFFF`;
+    default:
+      return "#FFFFFF";
+  }
+}
+
 export function CVDocument({ cv, d, lang }: TProps) {
   const Comp = COMPONENTS[cv.template] ?? Modern;
   const signature = React.useMemo(() => JSON.stringify(cv) + lang, [cv, lang]);
@@ -1205,10 +1220,11 @@ export function CVDocument({ cv, d, lang }: TProps) {
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
       style={{
+        position: "relative",
         width: A4_W,
         height: A4_H,
         overflow: "hidden",
-        background: "#FFFFFF",
+        background: backdrop(cv.template, lang === "ar"),
         fontFamily:
           lang === "ar" ? "'Cairo', 'Segoe UI', sans-serif" : "'Plus Jakarta Sans', 'Segoe UI', sans-serif",
       }}
@@ -1217,8 +1233,8 @@ export function CVDocument({ cv, d, lang }: TProps) {
         ref={ref}
         style={{
           ...vars,
+          position: "relative",
           width: A4_W,
-          
           transform: scale === 1 ? undefined : `scale(${scale})`,
           transformOrigin: lang === "ar" ? "top right" : "top left",
         }}
@@ -1228,3 +1244,4 @@ export function CVDocument({ cv, d, lang }: TProps) {
     </div>
   );
 }
+
