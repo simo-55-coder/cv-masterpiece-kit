@@ -5,6 +5,17 @@ import { jsPDF } from "jspdf";
 // base styles (notably the universal border-color rule). Force safe hex values
 // on every captured element before rendering.
 function sanitizeColors(root: HTMLElement) {
+  // Neutralize inherited CSS custom properties (Tailwind v4 theme tokens are
+  // oklch) so html2canvas never has to parse them while cloning styles.
+  const host = root.parentElement ?? root;
+  const hostCs = getComputedStyle(host);
+  for (const prop of hostCs) {
+    if (!prop.startsWith("--")) continue;
+    const v = hostCs.getPropertyValue(prop);
+    if (v && (v.includes("oklch") || v.includes("oklab") || v.includes("color-mix"))) {
+      host.style.setProperty(prop, prop.includes("foreground") ? "#0F172A" : "#E2E8F0");
+    }
+  }
   const all = [root, ...Array.from(root.querySelectorAll<HTMLElement>("*"))];
   const props: Array<[string, string]> = [
     ["color", "#0F172A"],
