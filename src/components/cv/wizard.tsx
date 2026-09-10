@@ -147,12 +147,29 @@ function PersonalStep({ cv, set, d }: StepProps) {
 
   const onFile = (file?: File) => {
     if (!file) return;
-    if (file.size > 3_000_000) {
-      toast.error("Max 3MB");
+    if (file.size > 8_000_000) {
+      toast.error("Max 8MB");
       return;
     }
     const reader = new FileReader();
-    reader.onload = () => upd("avatar")(String(reader.result));
+    reader.onload = () => {
+      const dataUrl = String(reader.result);
+      // Downscale to keep localStorage + PDF export fast and reliable
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 480;
+        const ratio = Math.min(1, MAX / Math.max(img.width, img.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(img.width * ratio);
+        canvas.height = Math.round(img.height * ratio);
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return upd("avatar")(dataUrl);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        upd("avatar")(canvas.toDataURL("image/jpeg", 0.88));
+      };
+      img.onerror = () => upd("avatar")(dataUrl);
+      img.src = dataUrl;
+    };
     reader.readAsDataURL(file);
   };
 
