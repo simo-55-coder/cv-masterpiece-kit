@@ -7,7 +7,9 @@ import { jsPDF } from "jspdf";
 function sanitizeColors(root: HTMLElement) {
   // Neutralize inherited CSS custom properties (Tailwind v4 theme tokens are
   // oklch) so html2canvas never has to parse them while cloning styles.
-  const host = root.parentElement ?? root;
+  // Apply on the captured node itself: html2canvas clones this subtree, so
+  // overrides on ancestors would be lost in the clone.
+  const host = root;
   const hostCs = getComputedStyle(host);
   for (const prop of hostCs) {
     if (!prop.startsWith("--")) continue;
