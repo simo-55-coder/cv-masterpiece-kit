@@ -213,7 +213,20 @@ function App() {
       </main>
 
       {/* offscreen full-size node used for PDF capture */}
-      <div style={{ position: "fixed", top: 0, left: -20000, opacity: hydrated ? 1 : 0, pointerEvents: "none" }}>
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: -20000,
+          opacity: hydrated ? 1 : 0,
+          pointerEvents: "none",
+          // html2canvas cannot parse Tailwind v4 oklch() tokens; force hex inheritance for capture
+          color: "#0F172A",
+          backgroundColor: "#FFFFFF",
+          borderColor: "#E2E8F0",
+          outlineColor: "#E2E8F0",
+        }}
+      >
         <div ref={exportRef}>
           <CVDocument cv={cv} d={d} lang={lang} />
         </div>
