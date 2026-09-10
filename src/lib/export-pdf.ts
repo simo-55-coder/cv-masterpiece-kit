@@ -1,7 +1,33 @@
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 
+// html2canvas cannot parse oklch()/color-mix() that Tailwind v4 injects via
+// base styles (notably the universal border-color rule). Force safe hex values
+// on every captured element before rendering.
+function sanitizeColors(root: HTMLElement) {
+  const all = [root, ...Array.from(root.querySelectorAll<HTMLElement>("*"))];
+  const props: Array<[string, string]> = [
+    ["color", "#0F172A"],
+    ["background-color", "#FFFFFF"],
+    ["border-top-color", "#E2E8F0"],
+    ["border-right-color", "#E2E8F0"],
+    ["border-bottom-color", "#E2E8F0"],
+    ["border-left-color", "#E2E8F0"],
+    ["outline-color", "#E2E8F0"],
+  ];
+  for (const el of all) {
+    const cs = getComputedStyle(el);
+    for (const [prop, fallback] of props) {
+      const v = cs.getPropertyValue(prop);
+      if (v && (v.includes("oklch") || v.includes("color-mix") || v.includes("oklab"))) {
+        el.style.setProperty(prop, fallback);
+      }
+    }
+  }
+}
+
 export async function exportNodeToPdf(node: HTMLElement, fileName: string) {
+  sanitizeColors(node);
   const canvas = await html2canvas(node, {
     scale: 2,
     useCORS: true,
